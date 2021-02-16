@@ -36,7 +36,7 @@ public class StorageServiceImpl implements StorageService {
 			// > Second Way
 			// Get the file and save it somewhere
 			byte[] bytes = file.getBytes();
-			Path path = Paths.get(uploadDir + file.getOriginalFilename());
+			Path path = Paths.get(uploadDir + fileName);
 			Files.write(path, bytes);
 
 			return fileName;
