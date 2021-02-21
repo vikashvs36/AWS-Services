@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -30,16 +31,17 @@ import com.aws.services.s3service.service.StorageService;
 @RequestMapping(value = "/api/local/s3")
 public class LocalStorageController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(S3StorageController .class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(LocalStorageController .class);
 	
 	@Autowired
+	@Qualifier("LocalStorageService")
 	private StorageService storageService;	
 	
 	@PostMapping(value = "/uploadFile")
-	public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+	public UploadFileResponse uploadObject(@RequestParam("file") MultipartFile file) {
 		LOGGER.info("Uploading files.....");
 
-		String fileName = storageService.store(file);
+		String fileName = storageService.uploadObject(file);
 
 		final String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
 				.path("downloadFile")
@@ -53,7 +55,7 @@ public class LocalStorageController {
 	public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
 		return Arrays.asList(files)
 				.stream()
-				.map(file -> uploadFile(file))
+				.map(file -> uploadObject(file))
 				.collect(Collectors.toList());
 	}
 	

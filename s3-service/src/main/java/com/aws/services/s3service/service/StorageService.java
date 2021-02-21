@@ -8,14 +8,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface StorageService {
 
-	String store(MultipartFile file);
+	String uploadObject(MultipartFile file);
 
-	Stream<Path> loadAll();
+	Stream<Path> uploadAllObjects();
 
 	Path load(String filename);
 
 	Resource loadAsResource(String filename);
 
-	void deleteAll();
+	String deleteObject(String fileUrl);
+	
+	String deleteMultipleObjects(String[] fileUrls);
 
 }

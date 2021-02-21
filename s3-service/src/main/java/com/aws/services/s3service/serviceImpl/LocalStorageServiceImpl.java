@@ -13,14 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.aws.services.s3service.service.StorageService;
 
-@Service
-public class StorageServiceImpl implements StorageService {
+@Service("LocalStorageService")
+public class LocalStorageServiceImpl implements StorageService {
 
 	@Value("${file.upload-dir}")
 	public String uploadDir;
 
 	@Override
-	public String store(MultipartFile file) {
+	public String uploadObject(MultipartFile file) {
 		final String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 		try {
 
@@ -46,15 +46,6 @@ public class StorageServiceImpl implements StorageService {
 		return null;
 	}
 
-	@Override
-	public Stream<Path> loadAll() {
-		return null;
-	}
-
-	@Override
-	public Path load(String filename) {
-		return null;
-	}
 
 	@Override
 	public Resource loadAsResource(String fileName) {
@@ -70,6 +61,28 @@ public class StorageServiceImpl implements StorageService {
 	}
 
 	@Override
-	public void deleteAll() {
+	public Stream<Path> uploadAllObjects() {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public String deleteObject(String fileUrl) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String deleteMultipleObjects(String[] fileUrls) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Path load(String filename) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
